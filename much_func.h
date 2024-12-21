@@ -2,31 +2,22 @@
 #include <iomanip>
 #include <string>
 #include <algorithm>
+#include <cstring>
+#include <queue>
 #include <climits>
 #include <cstdio>
+#include <functional>
 #include <numeric>
+#include <stack>
 #include <vector>
 #include "iofunc.h"
 #include "bignum.h"
 #include "vector_func.h"
+#include "mfdef.h"
 
 //--std=c++11, namespace much
 
 namespace much {
-#define V void
-#define I_16 short
-#define I_32 int
-#define I_64 long long
-#define _B bool
-#define D double
-#define C char
-#define STR std::string
-#define _T true
-#define _F false
-#define _R return
-
-	const D math_PI = 3.1415926535;
-
 	// The first one was deleted. Because of the "algorithm".
 	// 1_2
 	template<typename T>
@@ -163,18 +154,7 @@ namespace much {
 	}
 
 	// 27_1
-	//The return value is the number of sorting times.
-	template<typename T>
-	I_32 bubble_sort(T *nums, const I_32 len, _B compare(T(a), T(b))) {
-		I_32 cnt = 0;
-		for(I_32 j = 0; j < len; j++)
-			for (I_32 k = 0; k < len; k++)
-				if(compare(nums[k], nums[k + 1])) {
-					std::swap(nums[k],nums[k + 1]);
-					cnt++;
-				}
-		_R cnt;
-	}
+	// wrong.
 
 	// 28
 	STR cstr_to_stlstr(const char *cstr) {
@@ -183,12 +163,10 @@ namespace much {
 	}
 
 	// 29
-	D circular_area(D r) {
-		_R (math_PI * r * r);
-	}
+	// in "mfdef.h".
 
 	// 30
-	I_64 fib(I_32 n) {
+	I_64 fib(const I_32 n) {
 		I_64 a = 1, b = 1, c;
 		if (n < 3) return a;
 		for (I_32 i = 3; i <= n; i++) {
@@ -200,8 +178,8 @@ namespace much {
 	}
 
 	// 31
-	D circumference(D r) {
-		_R (math_PI * 2 * r);
+	D circumference(const D r) {
+		_R (mPI * 2 * r);
 	}
 
 	// 32, macro.
@@ -209,9 +187,33 @@ namespace much {
 	// 33_1
 	template <typename T>
 	//Please call srand(time(NULL))
-	void fill_random(T *nums, I_32 len, I_64 max_rand) {
+	V fill_random(T *nums, const I_32 len, const I_64 max_rand) {
 		for (I_32 i = 0; i < len; i++)
 			nums[i] = rand() % max_rand;
+	}
+
+	// 36_1
+	template <typename T>
+	T at_front(std::queue<T> &__q) {
+	    T tmp = __q.front();
+	    __q.pop();
+	    return tmp;
+	}
+
+	// 36_2
+	template <typename T>
+	T at_front(std::priority_queue<T> &_pq) {
+	    T tmp = _pq.front();
+	    _pq.pop();
+        return tmp;
+	}
+
+	// 36_3
+	template <typename T>
+	T at_top(std::stack<T> &_stk) {
+	    T tmp = _stk.top();
+	    _stk.pop();
+	    return tmp;
 	}
 
 }
