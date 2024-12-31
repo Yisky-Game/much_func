@@ -103,7 +103,7 @@ namespace much{
     std::istream& operator >> (std::istream& instr, bignum& x) {
         std::string s;
         instr >> s;
-        x = s.c;
+        x = s;
         return instr;
     }
     std::ostream& operator << (std::ostream& outstr, const bignum& x) {
