@@ -1,6 +1,7 @@
 //much_func: I/O function.
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 #include <vector>
 #include <string>
 #define fastcinout ios::sync_with_stdio(0), cin.tie(0), cout.tie(0)
@@ -94,5 +95,27 @@ namespace much {
 		}
 		if(n > 9) fast_write(n / 10);
 		putchar(n % 10 + '0');
+	}
+	
+	// 37
+	template <typename T>
+	void file_in(const std::string __path, T &sth) {
+		std::ifstream _fin(__path);
+		if (_fin.is_open()) {
+			_fin >> sth;
+			_fin.close();
+		} else
+			throw "In_File_Error";
+	}
+	
+	// 38
+	template <typename T>
+	void file_out(const std::string __path, T sth) {
+		std::ofstream _fout(__path);
+		if (_fout.is_open()) {
+			_fout << sth;
+			_fout.close();
+		} else
+			throw "Out_File_Error";
 	}
 }
