@@ -3,27 +3,29 @@
 #include <cstring>
 #include <algorithm>
 #include <numeric>
+#include "mfdef.h"
 namespace much{
-    #define Vector std::vector
     // operator
+	#if __cplusplus >= 201103L
     template<typename T>
     std::ostream& operator <<(std::ostream& outs, Vector<T> &a) {
         for (auto x : a)
             outs << x << ' ';
         return outs;
     }
+	#endif
 
     template<typename T>
     std::istream& operator >>(std::istream& ins, Vector<T> &a) {
-        for (int i = 0; i < a.size(); i++)
+        for (I_32 i = 0; i < a.size(); i++)
             ins >> a[i];
         return ins;
     }
 	// iofunc.h
 	// 10_2
 	template<typename T>
-	void input_some(Vector<T> &a, const int len) {
-		for (int i = 0; i < len; i++) {
+	void input_some(Vector<T> &a, const I_32 len) {
+		for (I_32 i = 0; i < len; i++) {
 			T sth = input(sth);
 			a.push_back(sth);
 		}
@@ -31,7 +33,7 @@ namespace much{
 
 	// 11_2
 	template<typename T>
-	void output_some(Vector<T> &a, const std::string Begin = "", const std::string end = " ", const std::string Lend = "\n") {
+	void output_some(Vector<T> &a, const STR Begin = "", const STR end = " ", const STR Lend = "\n") {
 		for (T x : a)
 			output(x, Begin, end);
 		std::cout << Lend;
@@ -39,15 +41,15 @@ namespace much{
 
 	// 20_2
 	template<typename T>
-	void input_some_a_to_b(Vector<T> &a, const int A, const int B) {
-		for (int i = A; i <= B; ++i)
+	void input_some_a_to_b(Vector<T> &a, const I_32 A, const I_32 B) {
+		for (I_32 i = A; i <= B; ++i)
 			input(a[i]);
 	}
 
 	// 21_2
 	template<typename T>
-	void output_some_a_to_b(Vector<T> &a, const int A, const int B, const std::string Begin = "", const std::string end = " ", const std::string Lend = "\n") {
-		for (int i = A; i <= B; ++i)
+	void output_some_a_to_b(Vector<T> &a, const I_32 A, const I_32 B, const STR Begin = "", const STR end = " ", const STR Lend = "\n") {
+		for (I_32 i = A; i <= B; ++i)
 			output(a[i], Begin, end);
 		std::cout << Lend;
 	}
@@ -87,8 +89,8 @@ namespace much{
 
 	// 22_2
 	template<typename T>
-	void run_to_some(Vector<T> &a, const int step = 1) {
-		for (int i = 0; i < a.size(); i += step)
+	void run_to_some(Vector<T> &a, const I_32 step = 1) {
+		for (I_32 i = 0; i < a.size(); i += step)
 			a[i] = i;
 	}
 
@@ -104,8 +106,8 @@ namespace much{
     // 33_2
 	//Please call srand(time(NULL))
 	template <typename T>
-	void fill_random(Vector<T> &nums, int len, long long max_rand) {
-		for (int i = 0; i < len; i++)
+	void fill_random(Vector<T> &nums, I_32 len, I_64 max_rand) {
+		for (I_32 i = 0; i < len; i++)
 			nums[i] = rand() % max_rand;
 	}
 
