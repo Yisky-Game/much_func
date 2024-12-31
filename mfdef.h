@@ -8,6 +8,7 @@ namespace much {
 #define D double
 #define C char
 #define STR std::string
+#define Vector std::vector
 #define _T true
 #define _F false
 #define _R return
@@ -18,5 +19,7 @@ namespace much {
 #define mdst(x1, y1, x2, y2) sqrt(pow((x1 - x2), 2) + pow((y1 - y2), 2))
 #define _rep(i, a, b) for (i = a; i <= b; i++)
 #define _for(i, a, b) for (i = a; i < b; i++)
-#define _range_for(i, _range) for (auto i : _range)
+#if __cplusplus >= 201103L
+	#define _range_for(i, _range) for (auto i : _range)
+#endif
 }
