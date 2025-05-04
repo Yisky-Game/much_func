@@ -1,15 +1,16 @@
+#ifndef _imported_much_func
+#define _imported_much_func
 #include <iostream>
 #include <iomanip>
 #include <string>
 #include <algorithm>
 #include <cstring>
-#include <queue>
 #include <climits>
 #include <cstdio>
 #include <functional>
 #include <numeric>
-#include <stack>
 #include <vector>
+#include <random>
 #include "iofunc.h"
 #include "bignum.h"
 #include "vector_func.h"
@@ -21,17 +22,17 @@ namespace much {
 	// The first one was deleted. Because of the "algorithm".
 	// 1_2
 	template<typename T>
-	I_32 sth_len(const T *sth) {
+	I_32 sth_len(const T *sth, const T stop = 0) {
 		I_32 len = 0;
-		while (sth[len] != 0)
+		while (sth[len] != stop)
 			len++;
-		return len;
+		_R len;
 	}
 
 	// 2
 	template<typename T>
-	_B is_prime(const T n) {
-		if (n <= 1) _R _F;
+	_B is_prime(const T n) { 
+		if (n < 2) _R _F;
 		for (T i = 2; i * i <= n; ++i) {
 			if (n % i == 0)
 				_R _F;
@@ -61,9 +62,9 @@ namespace much {
 
 	// 5
 	template<typename T>
-	D avg(const T *nums, const I_32 len) {
+	Db avg(const T *nums, const I_32 len) {
 		T sum = std::accumulate(nums, nums + len, T(0));
-		_R static_cast<D>(sum) / len;
+		_R static_cast<Db>(sum) / len;
 	}
 
 	// 9
@@ -74,25 +75,25 @@ namespace much {
 
 	// 12
 	template<typename T>
-	V n_to_some(T *a, const T n, const I_32 len) {
+	Vd n_to_some(T *a, const T n, const I_32 len) {
 		std::fill_n(a, len, n);
 	}
 
 	// 13_1
 	template<typename T>
-	V cstr_to_ascii(C *str, T *ascii, const I_32 len) {
-		std::transform(str, str + len, ascii, [](C ch) { _R static_cast<I_32>(ch); });
+	Vd cstr_to_ascii(Chr *str, T *ascii, const I_32 len) {
+		std::transform(str, str + len, ascii, [](Chr ch) { _R static_cast<I_32>(ch); });
 	}
 
 	// 13_2
 	template<typename T>
-	V stlstr_to_ascii(STR str, T *ascii, const I_32 len) {
-		std::transform(str.begin(), str.begin() + len, ascii, [](C ch) { _R static_cast<I_32>(ch); });
+	Vd stlstr_to_ascii(STR str, T *ascii, const I_32 len) {
+		std::transform(str.begin(), str.begin() + len, ascii, [](Chr ch) { _R static_cast<I_32>(ch); });
 	}
 
 	// 14
 	template<typename T>
-	V bsome_to_asome(const T *b, T *a, const I_32 len) {
+	Vd bsome_to_asome(const T *b, T *a, const I_32 len) {
 		std::copy(b, b + len, a);
 	}
 
@@ -110,20 +111,20 @@ namespace much {
 
 	// 19
 	template<typename T>
-	V n_to_some_a_to_b(T *a, const T n, const I_32 A, const I_32 B) {
+	Vd n_to_some_a_to_b(T *a, const T n, const I_32 A, const I_32 B) {
 		std::fill(a + A, a + B + 1, n);
 	}
 
 	// 22
 	template<typename T>
-	V run_to_some(T *a, const I_32 len, const I_32 step = 1) {
+	Vd run_to_some(T *a, const I_32 len, const I_32 step = 1) {
 		for (I_32 i = 0; i < len; i += step)
 			a[i] = i;
 	}
 
 	// 23
 	template<typename T>
-	V run_to_some_a_to_b(T *a, const I_32 A, const I_32 B, const I_32 step = 1) {
+	Vd run_to_some_a_to_b(T *a, const I_32 A, const I_32 B, const I_32 step = 1) {
 		I_32 j = 0;
 		for (I_32 i = A; i <= B; i += step)
 			a[i] = ++j;
@@ -143,13 +144,13 @@ namespace much {
 
 	// 25
 	template<typename T>
-	V reverse_some(T *a, const I_32 len) {
+	Vd reverse_some(T *a, const I_32 len) {
 		std::reverse(a, a + len);
 	}
 
 	// 26
 	template<typename T>
-	V bsome_to_asome_a_to_b(const T *b, T *a, const I_32 AA, const I_32 AB, const I_32 BA, const I_32 BB) {
+	Vd bsome_to_asome_a_to_b(const T *b, T *a, const I_32 AA, const I_32 AB, const I_32 BA, const I_32 BB) {
 		std::copy(b + BA, b + BB + 1, a + AA);
 	}
 
@@ -162,13 +163,21 @@ namespace much {
 		_R str;
 	}
 
-	// 29
-	// in "mfdef.h".
-
+	// 29 was here.
+	// 29_1, Splice the sequences a and b into the sequence obj, unordered. 
+	template <typename T>
+	Vd merge(T *a, I_32 alen, T *b, I_32 blen, T *obj) {
+		for (I_32 i = 0; i < alen; i++)
+			obj[i] = a[i];
+		for (I_32 i = 0; i < blen; i++)
+			obj[alen + i] = b[i];
+	}
+	
+	
 	// 30
 	I_64 fib(const I_32 n) {
 		I_64 a = 1, b = 1, c;
-		if (n < 3) return a;
+		if (n < 3) _R a;
 		for (I_32 i = 3; i <= n; i++) {
 			c = a + b;
 			a = b;
@@ -177,44 +186,86 @@ namespace much {
 		_R c;
 	}
 
-	// 31
-	D circumference(const D r) {
-		_R (mPI * 2 * r);
+	// 31 was here.
+	// 31_1
+	template <typename rT>
+	Vd fill_random(I_32 *nums, rT rtype, const I_32 len, const I_32 maxr) {
+		for (I_32 i = 0; i < len; i++)
+			nums[i] = rtype() % maxr;
 	}
-
-	// 32, macro.
-#define negation(BOOL_VAL) BOOL_VAL = !BOOL_VAL
+	
+	// 31_2
+	template <typename rT>
+	Vd fill_random(I_64 *nums, rT rtype, const I_32 len, const I_64 maxr) {
+		for (I_32 i = 0; i < len; i++)
+			nums[i] = rtype() % maxr;
+	}
+	
+	// 32(macro) was here.
+	// Now, 32 is a 'binary search' function.
+	// 32_1, normal
+	template <typename T, typename func>
+	T bsearch1(T l, T r, func check) {
+		while (l < r) {
+			T mid = l + r >> 1;
+			if (check(mid))
+				r = mid - 1;
+			else
+				l = mid + 1;
+		}
+		_R l;
+	}
+	
+	// 32_2, [l, r] -> [l, mid], [mid + 1, r]
+	template <typename T, typename func>
+	T bsearch2(T l, T r, func check) {
+		while (l < r) {
+			T mid = l + r >> 1;
+			if (check(mid))
+				r = mid;
+			else
+				l = mid + 1;
+		}
+		_R l;
+	}
+	
+	// 32_3, [l, r] -> [l, mid), [mid, r]
+	template <typename T, typename func>
+	T bsearch3(T l, T r, func check) {
+		while (l < r) {
+			T mid = l + r + 1 >> 1;
+			if (check(mid))
+				l = mid;
+			else
+				r = mid - 1;
+		}
+		_R l;
+	}
+	
 	// 33_1
 	template <typename T>
-	//Please call srand(time(NULL))
-	V fill_random(T *nums, const I_32 len, const I_64 max_rand) {
+	// Please call srand(time(NULL))
+	Vd fill_random(T *nums, const I_32 len, const I_64 maxr) {
 		for (I_32 i = 0; i < len; i++)
-			nums[i] = rand() % max_rand;
+			nums[i] = rand() % maxr;
 	}
-
-	// 36_1
+	
+	// 33_2
 	template <typename T>
-	T at_front(std::queue<T> &__q) {
-	    T tmp = __q.front();
-	    __q.pop();
-	    return tmp;
+	// Please call srand(time(NULL))
+	Vd fill_random(T *nums, const I_32 len, const I_32 maxr) {
+		for (I_32 i = 0; i < len; i++)
+			nums[i] = rand() % maxr;
 	}
-
-	// 36_2
-	template <typename T>
-	T at_front(std::priority_queue<T> &_pq) {
-	    T tmp = _pq.front();
-	    _pq.pop();
-        return tmp;
+	
+	// 42_1
+	template <typename T, typename _rdt, typename _sdt>
+	Vd fill_random_ab(T *nums, const I_32 len, const T a, const T b, const _sdt sd) {
+		std::default_random_engine eng;
+		_rdt rd(a, b);
+		eng.seed(sd);
+		for (I_32 i = 0; i < len; i++)
+			nums[i] = rd(eng);
 	}
-
-	// 36_3
-	template <typename T>
-	T at_top(std::stack<T> &_stk) {
-	    T tmp = _stk.top();
-	    _stk.pop();
-	    return tmp;
-	}
-
 }
-
+#endif
