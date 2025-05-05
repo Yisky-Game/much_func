@@ -2,6 +2,8 @@
 此仓库为 [这个仓库](https://github.com/YiskyGame/much_func) 的fork.
 
 [原仓库创建者](https://github.com/YiskyGame) 因未知原因无法登录，导致无法更新。此仓库的 [创建者](https://github.com/Yisky-Game) 为原仓库创建者的小号。
+
+下载 v3.2.1 及以前的版本，请去原仓库下载。
 # much_func
 much_func，最初的名字叫作much function，意为更多函数。
 
