@@ -18,8 +18,3 @@ much_func，最初的名字叫作much function，意为更多函数。
 + _(特殊-因v4.0正式版还未发布)_ func_atob.h：4.0-Pre及之后用于存放函数a_to_b变种。
 
 截止目前，头文件中的函数有几十个，这里就不再描述了。可以自己去查看。
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Yisky-Game/much_func&type=Date)](https://www.star-history.com/#Yisky-Game/much_func&Date)
-[![Star History Chart](https://api.star-history.com/svg?repos=YiskyGame/much_func&type=Date)](https://www.star-history.com/#YiskyGame/much_func&Date)
